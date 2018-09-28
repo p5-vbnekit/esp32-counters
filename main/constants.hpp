@@ -10,7 +10,8 @@
 namespace application {
 namespace constants {
 
-    constexpr static auto MAX_SSID_LENGTH = 32;
+    constexpr static auto const MAX_SSID_LENGTH = 32;
+    constexpr static auto const MAX_WIFI_PASSWORD_LENGTH = 64;
 
 } // namespace constants
 } // namespace application

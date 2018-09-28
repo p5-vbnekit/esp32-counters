@@ -11,13 +11,14 @@ namespace wifi {
 namespace settings {
 
     struct Object final {
-        ::std::string temporaryAccessPointSsid;
-
-        struct Station {
+        struct Station final {
             bool enabled = false;
             ::std::string ssid;
             ::std::string password;
         };
+
+        Station station;
+        ::std::string temporaryAccessPointSsid;
     };
 
     Object const & get() noexcept(true);

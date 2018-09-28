@@ -210,45 +210,35 @@ namespace handler {
 
         ::gpio_config_t config;
 
-        // interrupt of any edge
         config.intr_type = ::GPIO_INTR_ANYEDGE;
-        // bit mask of the pins, use GPIO32 here
         config.pin_bit_mask = 1ULL << global::constants::pins::REED_SWITCH;
-        // set as input mode
         config.mode = ::GPIO_MODE_INPUT;
-        // enable pull-up mode
         config.pull_up_en = ::GPIO_PULLUP_ENABLE;
-        // disable pull-down mode
         config.pull_down_en = ::GPIO_PULLDOWN_DISABLE;
         ESP_ERROR_CHECK(::gpio_config(&config));
+        ESP_LOGI("app/gpio", "reed switch pin configured");
 
-        // interrupt of any edge
         config.intr_type = ::GPIO_INTR_ANYEDGE;
-        // bit mask of the pins, use GPIO33 here
         config.pin_bit_mask = 1ULL << global::constants::pins::POWER;
-        // set as input mode
         config.mode = ::GPIO_MODE_INPUT;
-        // disable pull-up mode
         config.pull_up_en = ::GPIO_PULLUP_DISABLE;
-        // enable pull-down mode
         config.pull_down_en = ::GPIO_PULLDOWN_ENABLE;
         ESP_ERROR_CHECK(::gpio_config(&config));
+        ESP_LOGI("app/gpio", "power monitor pin configured");
 
-        // change gpio intrrupt type
         ESP_ERROR_CHECK(::gpio_set_intr_type(global::constants::pins::POWER, ::GPIO_INTR_ANYEDGE));
         ESP_ERROR_CHECK(::gpio_set_intr_type(global::constants::pins::REED_SWITCH, ::GPIO_INTR_ANYEDGE));
+        ESP_LOGI("app/gpio", "interrupts configured");
 
-        // start gpio tasks
         ESP_ERROR_CHECK(handler::helpers::createTasks());
+        ESP_LOGI("app/gpio", "handling tasks activated");
 
-        // install gpio isr service
         ESP_ERROR_CHECK(::gpio_install_isr_service(global::constants::INTR_DEFAULT_MASK));
+        ESP_LOGI("app/gpio", "isr service installed");
 
-        // hook isr handler for specific gpio pin
         ESP_ERROR_CHECK(handler::isr::install(global::constants::pins::POWER, handler::isr::entries::power));
-
-        // hook isr handler for specific gpio pin
         ESP_ERROR_CHECK(handler::isr::install(global::constants::pins::REED_SWITCH, handler::isr::entries::reedSwitch));
+        ESP_LOGI("app/gpio", "isr callbacks installed");
 
         ESP_LOGI("app/gpio", "initialization finished");
     }
