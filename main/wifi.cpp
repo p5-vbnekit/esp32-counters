@@ -21,7 +21,7 @@
 #include <freertos/task.h>
 
 #include "wifi.hpp"
-#include "constants.hpp"
+#include "common.hpp"
 
 
 namespace application {
@@ -216,9 +216,9 @@ namespace settings {
     Object const & get() noexcept(true) { return Global::instance().settings; }
 
     void set(Object &&settings) noexcept(true) {
-        if (settings.temporaryAccessPointSsid.size() > constants::MAX_SSID_LENGTH) settings.temporaryAccessPointSsid.resize(constants::MAX_SSID_LENGTH);
-        if (settings.station.ssid.size() > constants::MAX_SSID_LENGTH) settings.station.ssid.resize(constants::MAX_SSID_LENGTH);
-        if (settings.station.password.size() > constants::MAX_WIFI_PASSWORD_LENGTH) settings.station.password.resize(constants::MAX_WIFI_PASSWORD_LENGTH);
+        if (settings.temporaryAccessPointSsid.size() > common::wifi::MAX_SSID_LENGTH) settings.temporaryAccessPointSsid.resize(common::wifi::MAX_SSID_LENGTH);
+        if (settings.station.ssid.size() > common::wifi::MAX_SSID_LENGTH) settings.station.ssid.resize(common::wifi::MAX_SSID_LENGTH);
+        if (settings.station.password.size() > common::wifi::MAX_PASSWORD_LENGTH) settings.station.password.resize(common::wifi::MAX_PASSWORD_LENGTH);
         Global::instance().settings = ::std::move(settings);
         ESP_LOGI("app/wifi", "settings = %s", Global::instance().settings.temporaryAccessPointSsid.c_str());
     }

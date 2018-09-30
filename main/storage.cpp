@@ -8,7 +8,7 @@
 #include <nvs_flash.h>
 
 #include "storage.hpp"
-#include "constants.hpp"
+#include "common.hpp"
 
 
 namespace application {
@@ -45,7 +45,7 @@ namespace data {
             ESP_LOGD("app/storage", "couner value updated");
         }
 
-        if (data.temporaryAccessPointSsid.size() > constants::MAX_SSID_LENGTH) data.temporaryAccessPointSsid.resize(constants::MAX_SSID_LENGTH);
+        if (data.temporaryAccessPointSsid.size() > common::wifi::MAX_SSID_LENGTH) data.temporaryAccessPointSsid.resize(common::wifi::MAX_SSID_LENGTH);
         if (data.temporaryAccessPointSsid != global.data.temporaryAccessPointSsid) {
             changed = true;
             auto const &value = global.data.temporaryAccessPointSsid = ::std::move(data.temporaryAccessPointSsid);
@@ -110,7 +110,7 @@ namespace data {
 
                 ESP_ERROR_CHECK(error);
 
-                if (! (size < constants::MAX_SSID_LENGTH)) return {buffer.data(), constants::MAX_SSID_LENGTH};
+                if (! (size < common::wifi::MAX_SSID_LENGTH)) return {buffer.data(), common::wifi::MAX_SSID_LENGTH};
                 return buffer.data();
             } ();
         }

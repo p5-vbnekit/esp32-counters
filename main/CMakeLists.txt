@@ -5,7 +5,7 @@ set(COMPONENT_SRCS
     "counter.cpp" "counter.hpp"
     "wifi.cpp" "wifi.hpp"
     "storage.cpp" "storage.hpp"
-    "constants.hpp"
+    "common.hpp"
 )
 
 set(COMPONENT_ADD_INCLUDEDIRS "")
