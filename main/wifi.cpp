@@ -135,7 +135,7 @@ namespace helpers {
 
 namespace tasks {
 
-    void scaner(void *) noexcept(true) {
+    void scanner(void *) noexcept(true) {
         while(true) {
             auto delay = 30000 / portTICK_PERIOD_MS;
 
@@ -270,9 +270,9 @@ namespace settings {
         ESP_ERROR_CHECK(::esp_wifi_start());
         ESP_LOGI("app/wifi", "machine started");
 
-        auto status = ::xTaskCreate(tasks::scaner, "app/wifi/scanner", ::std::max(configMINIMAL_STACK_SIZE, 8192), nullptr, 0, nullptr);
+        auto status = ::xTaskCreate(tasks::scanner, "app/wifi/scanner", ::std::max(configMINIMAL_STACK_SIZE, 8192), nullptr, 0, nullptr);
         ESP_ERROR_CHECK(pdTRUE == status ? ESP_OK : ESP_FAIL);
-        ESP_LOGI("app/wifi", "app/wifi/scaner task started");
+        ESP_LOGI("app/wifi", "app/wifi/scanner task started");
 
         ESP_LOGI("app/wifi", "initialization finished");
     }
